@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.gallery.GalleryActivity;
+import com.example.list.ArrayAdapterActivity;
+import com.example.list.SimpleAdapterActivity;
 import com.example.service.ServicesEx;
 import com.example.sqlitehelper.BmiDbHelper;
 
@@ -165,6 +167,16 @@ public class MainActivity extends Activity {
 			return true;
 		case R.id.gallery:
 			intent = new Intent(this, GalleryActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			return true;
+		case R.id.arrayAdapter:
+			intent = new Intent(this, ArrayAdapterActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			return true;
+		case R.id.simpleAdapter:
+			intent = new Intent(this, SimpleAdapterActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			return true;

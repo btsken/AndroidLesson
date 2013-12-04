@@ -29,5 +29,17 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="Gallery"/>
+    
+    <item
+        android:id="@+id/arrayAdapter"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="ArrayAdapter"/>
+    
+    <item
+        android:id="@+id/simpleAdapter"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="SimpleAdapter"/>
 
 </menu>

@@ -20,14 +20,15 @@
         android:padding="@dimen/activity_horizontal_margin" >
 
     </Gallery>
-    <!--  -->
+
 	<com.google.ads.AdView android:id="@+id/adView"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content" 
              ads:adUnitId="a152981a42779bd"
              ads:adSize="SMART_BANNER"
-             ads:testDevices="I7JZYSGA4SBQWOSW"
-             ads:loadAdOnCreate="true"/>
+              ads:loadAdOnCreate="true"/>
+               <!-- ads:testDevices="I7JZYSGA4SBQWOSW"   -->
+            
     
 
 </LinearLayout>
