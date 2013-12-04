@@ -18,7 +18,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.gallery.GalleryActivity;
 import com.example.service.ServicesEx;
+import com.example.sqlitehelper.BmiDbHelper;
 
 public class MainActivity extends Activity {
 	private EditText heightET;
@@ -123,13 +125,14 @@ public class MainActivity extends Activity {
 	private void init() {
 		bmi = new Bmi();
 		Intent intent = new Intent(MainActivity.this, ServicesEx.class);
-        startService(intent);
+		startService(intent);
 
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the mBuenu; this adds items to the action bar if it is present.
+		// Inflate the mBuenu; this adds items to the action bar if it is
+		// present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
@@ -156,7 +159,14 @@ public class MainActivity extends Activity {
 			startActivity(intent);
 			return true;
 		case R.id.sqlite:
-			
+			BmiDbHelper BmiDbHelper = new BmiDbHelper(this);
+			BmiDbHelper.create(bmi);
+			BmiDbHelper.readAll();
+			return true;
+		case R.id.gallery:
+			intent = new Intent(this, GalleryActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

@@ -23,5 +23,11 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="createDB"/>
+    
+    <item
+        android:id="@+id/gallery"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="Gallery"/>
 
 </menu>

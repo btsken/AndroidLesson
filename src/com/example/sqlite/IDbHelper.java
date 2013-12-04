@@ -3,7 +3,7 @@ package com.example.sqlite;
 import java.util.List;
 
 
-public interface ISqlite<T> {	
+public interface IDbHelper<T> {	
 	public boolean create(T o);
 	public List<T> readAll();
 	public T read(int id);

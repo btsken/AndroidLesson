@@ -45,7 +45,7 @@ public class BmiDb extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public boolean create(String value) {
+	public boolean create(double value) {
 		ContentValues args = new ContentValues();
 		args.put("value", value);
 
