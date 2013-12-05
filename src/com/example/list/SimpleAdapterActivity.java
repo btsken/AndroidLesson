@@ -5,21 +5,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.example.lesson1.R;
 
-public class SimpleAdapterActivity extends ListActivity {
+public class SimpleAdapterActivity extends Activity {
+	private ListView listView;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		setContentView(R.layout.activity_list);
+		listView = (ListView)findViewById(R.id.listView1);
 		SimpleAdapter adapter = new SimpleAdapter(this, getData(),
 				R.layout.simple_adapter, new String[] { "title", "img" },
 				new int[] { R.id.title, R.id.img });
-		setListAdapter(adapter);
+		listView.setAdapter(adapter);
 	}
 
 	private List<Map<String, Object>> getData() {

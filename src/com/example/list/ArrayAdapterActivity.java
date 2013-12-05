@@ -8,18 +8,18 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.lesson1.R;
+
 public class ArrayAdapterActivity extends Activity {
 	private ListView listView;
 
-	// private List<String> data = new ArrayList<String>();
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		listView = new ListView(this);
+		setContentView(R.layout.activity_list);
+		listView = (ListView)findViewById(R.id.listView1);
 		listView.setAdapter(new ArrayAdapter<String>(this,
 				android.R.layout.simple_expandable_list_item_1, getData()));
-		setContentView(listView);
 	}
 
 	private List<String> getData() {

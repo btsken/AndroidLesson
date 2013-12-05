@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.gallery.GalleryActivity;
 import com.example.list.ArrayAdapterActivity;
+import com.example.list.BaseAdapterActivity;
 import com.example.list.SimpleAdapterActivity;
 import com.example.service.ServicesEx;
 import com.example.sqlitehelper.BmiDbHelper;
@@ -163,7 +164,11 @@ public class MainActivity extends Activity {
 		case R.id.sqlite:
 			BmiDbHelper BmiDbHelper = new BmiDbHelper(this);
 			BmiDbHelper.create(bmi);
-			BmiDbHelper.readAll();
+//			bmi.value = 100;
+//			BmiDbHelper.update(1, bmi);			
+//			BmiDbHelper.read(1);
+//			BmiDbHelper.delete(2);
+//			BmiDbHelper.readAll();
 			return true;
 		case R.id.gallery:
 			intent = new Intent(this, GalleryActivity.class);
@@ -177,6 +182,11 @@ public class MainActivity extends Activity {
 			return true;
 		case R.id.simpleAdapter:
 			intent = new Intent(this, SimpleAdapterActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			return true;
+		case R.id.baseAdapter:
+			intent = new Intent(this, BaseAdapterActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			return true;

@@ -41,5 +41,11 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="SimpleAdapter"/>
+    
+    <item
+        android:id="@+id/baseAdapter"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="BaseAdapter"/>
 
 </menu>

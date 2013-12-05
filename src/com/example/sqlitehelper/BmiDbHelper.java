@@ -34,6 +34,9 @@ public class BmiDbHelper implements IDbHelper<Bmi> {
 			for (int i = 0; i < rows_num; i++) {
 				Log.e(SqliteConstant.BMI_COLUMNS[0], cursor.getInt(0) + "");
 				Log.e(SqliteConstant.BMI_COLUMNS[1], cursor.getDouble(1) + "");
+				
+				
+				
 				cursor.moveToNext(); // 將指標移至下一筆資料
 			}
 		}
