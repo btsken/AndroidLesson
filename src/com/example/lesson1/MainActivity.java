@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,7 @@ import com.example.gallery.GalleryActivity;
 import com.example.list.ArrayAdapterActivity;
 import com.example.list.BaseAdapterActivity;
 import com.example.list.SimpleAdapterActivity;
-import com.example.service.ServicesEx;
+import com.example.service.ReceiverDetect;
 import com.example.sqlitehelper.BmiDbHelper;
 
 public class MainActivity extends Activity {
@@ -127,9 +128,15 @@ public class MainActivity extends Activity {
 
 	private void init() {
 		bmi = new Bmi();
-		Intent intent = new Intent(MainActivity.this, ServicesEx.class);
-		startService(intent);
+		Log.e("213", "123");
+		IntentFilter ifilter = new IntentFilter();
+		ifilter.addAction(Intent.ACTION_NEW_OUTGOING_CALL); // if make a phone
+															// call
+		ifilter.addAction(Intent.ACTION_SCREEN_OFF); // if screen turn off
+		ifilter.addAction(Intent.ACTION_SCREEN_ON); // if screen turn on
 
+		ReceiverDetect r = new ReceiverDetect();
+		registerReceiver(r, ifilter);
 	}
 
 	@Override
@@ -164,11 +171,11 @@ public class MainActivity extends Activity {
 		case R.id.sqlite:
 			BmiDbHelper BmiDbHelper = new BmiDbHelper(this);
 			BmiDbHelper.create(bmi);
-//			bmi.value = 100;
-//			BmiDbHelper.update(1, bmi);			
-//			BmiDbHelper.read(1);
-//			BmiDbHelper.delete(2);
-//			BmiDbHelper.readAll();
+			// bmi.value = 100;
+			// BmiDbHelper.update(1, bmi);
+			// BmiDbHelper.read(1);
+			// BmiDbHelper.delete(2);
+			// BmiDbHelper.readAll();
 			return true;
 		case R.id.gallery:
 			intent = new Intent(this, GalleryActivity.class);
