@@ -47,5 +47,11 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="BaseAdapter"/>
+    
+    <item
+        android:id="@+id/thread"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="thread"/>
 
 </menu>
