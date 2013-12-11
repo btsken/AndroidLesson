@@ -2,6 +2,7 @@ package com.example.lesson1;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.text.DecimalFormat;
 
 import android.app.Activity;
@@ -10,6 +11,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -164,11 +168,11 @@ public class MainActivity extends Activity {
 		case R.id.sqlite:
 			BmiDbHelper BmiDbHelper = new BmiDbHelper(this);
 			BmiDbHelper.create(bmi);
-//			bmi.value = 100;
-//			BmiDbHelper.update(1, bmi);			
-//			BmiDbHelper.read(1);
-//			BmiDbHelper.delete(2);
-//			BmiDbHelper.readAll();
+			// bmi.value = 100;
+			// BmiDbHelper.update(1, bmi);
+			// BmiDbHelper.read(1);
+			// BmiDbHelper.delete(2);
+			// BmiDbHelper.readAll();
 			return true;
 		case R.id.gallery:
 			intent = new Intent(this, GalleryActivity.class);
@@ -190,8 +194,52 @@ public class MainActivity extends Activity {
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			return true;
+		case R.id.thread:
+
+			Thread timmer = new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						while (true) {
+							Time t = new Time();
+							t.setToNow();
+							Thread.sleep(1000);
+							Bundle countBundle = new Bundle();
+							countBundle.putString("count", t.toString());
+
+							Message msg = new Message();
+							msg.setData(countBundle);
+
+							mHandler.sendMessage(msg);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			timmer.start();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
+
+	private static class MyHandler extends Handler {
+		private final WeakReference<MainActivity> mActivity;
+
+		public MyHandler(MainActivity activity) {
+			mActivity = new WeakReference<MainActivity>(activity);
+		}
+
+		@Override
+		public void handleMessage(Message msg) {
+			MainActivity activity = mActivity.get();
+			if (activity != null) {
+				activity.bmiTV.setText(msg.getData().getString("count", ""));
+			}
+		}
+	}
+
+	private final MyHandler mHandler = new MyHandler(this);
 }

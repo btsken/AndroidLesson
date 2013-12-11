@@ -10,4 +10,5 @@
 	<string name="intent">換頁傳值</string>
 	<string name="create_folder">新建資料夾</string>
 	<string name="get_file">取得所有檔案名稱</string>
+	<string name="test">測試資料1</string>
 </resources>

@@ -25,7 +25,7 @@ public class ArrayAdapterActivity extends Activity {
 	private List<String> getData() {
 
 		List<String> data = new ArrayList<String>();
-		data.add("測試資料1");
+		data.add(getString(R.string.test));
 		data.add("測試資料2");
 		data.add("測試資料3");
 		data.add("測試資料4");
