@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -14,14 +15,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.format.Time;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gallery.GalleryActivity;
 import com.example.list.ArrayAdapterActivity;
@@ -29,6 +34,7 @@ import com.example.list.BaseAdapterActivity;
 import com.example.list.SimpleAdapterActivity;
 import com.example.service.ReceiverDetect;
 import com.example.sqlitehelper.BmiDbHelper;
+import com.example.web.DownloadWebPicture;
 
 public class MainActivity extends Activity {
 	private EditText heightET;
@@ -40,6 +46,11 @@ public class MainActivity extends Activity {
 	private TextView bmiTV;
 	private Bmi bmi;
 	private String s = "";
+	private GestureDetector gesture;
+	private Context context;
+	private ProgressDialog myDialog;
+	private ImageView imageView;
+	private DownloadWebPicture loadPic = new DownloadWebPicture();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -128,9 +139,11 @@ public class MainActivity extends Activity {
 		intentBTN = (Button) findViewById(R.id.intentBTN);
 		folderBTN = (Button) findViewById(R.id.folderBTN);
 		getFileBTN = (Button) findViewById(R.id.getFileBTN);
+		imageView = (ImageView) findViewById(R.id.imageView1);
 	}
 
 	private void init() {
+		context = this;
 		bmi = new Bmi();
 		Log.e("213", "123");
 		IntentFilter ifilter = new IntentFilter();
@@ -141,6 +154,8 @@ public class MainActivity extends Activity {
 
 		ReceiverDetect r = new ReceiverDetect();
 		registerReceiver(r, ifilter);
+
+		gesture = new GestureDetector(this, gestureListener);
 	}
 
 	@Override
@@ -150,6 +165,64 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub
+		return gesture.onTouchEvent(event);
+	}
+
+	OnGestureListener gestureListener = new OnGestureListener() {
+
+		@Override
+		public boolean onDown(MotionEvent arg0) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+				float velocityY) {
+
+			if (e1.getX() - e2.getX() > 120) { // 向左
+				Toast.makeText(context, "向左滑", Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(context, BaseAdapterActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+			} else if (e1.getX() - e2.getX() < -120) { // 向右
+				Toast.makeText(context, "向右滑", Toast.LENGTH_LONG).show();
+			} else {
+				return false;
+			}
+
+			return true;
+		}
+
+		@Override
+		public void onLongPress(MotionEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public boolean onScroll(MotionEvent arg0, MotionEvent arg1, float arg2,
+				float arg3) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public void onShowPress(MotionEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public boolean onSingleTapUp(MotionEvent arg0) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+	};
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -202,27 +275,34 @@ public class MainActivity extends Activity {
 			startActivity(intent);
 			return true;
 		case R.id.thread:
+			myDialog = ProgressDialog.show(MainActivity.this, "Please Wait",
+					"Connecting...");
+
+			final String url = "http://uploadingit.com/file/lltpirkd9pk3jbuw/raccoon.png";
 
 			Thread timmer = new Thread(new Runnable() {
 
 				@Override
 				public void run() {
-					try {
-						while (true) {
-							Time t = new Time();
-							t.setToNow();
-							Thread.sleep(1000);
-							Bundle countBundle = new Bundle();
-							countBundle.putString("count", t.toString());
 
-							Message msg = new Message();
-							msg.setData(countBundle);
+					loadPic.handleWebPic(url, mHandler);
 
-							mHandler.sendMessage(msg);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					// try {
+					// while (true) {
+					// Time t = new Time();
+					// t.setToNow();
+					// Thread.sleep(1000);
+					// Bundle countBundle = new Bundle();
+					// countBundle.putString("count", t.toString());
+					//
+					// Message msg = new Message();
+					// msg.setData(countBundle);
+					//
+					// mHandler.sendMessage(msg);
+					// }
+					// } catch (Exception e) {
+					// e.printStackTrace();
+					// }
 				}
 			});
 			timmer.start();
@@ -244,7 +324,16 @@ public class MainActivity extends Activity {
 			MainActivity activity = mActivity.get();
 			if (activity != null) {
 				activity.bmiTV.setText(msg.getData().getString("count", ""));
+				//
+				switch (msg.what) {
+				case 1:
+					activity.myDialog.dismiss();
+					activity.imageView
+							.setImageBitmap(activity.loadPic.getImg());
+					break;
+				}
 			}
+
 		}
 	}
 
