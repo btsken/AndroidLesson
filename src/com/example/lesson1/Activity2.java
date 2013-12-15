@@ -7,11 +7,11 @@ import android.widget.TextView;
 
 public class Activity2 extends Activity{
 	private TextView tv;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main2);
+		
 		tv = (TextView) findViewById(R.id.textView1);
 		Intent intent = this.getIntent();
 		Bundle bundle = intent.getExtras();	//¨ú±oBundle

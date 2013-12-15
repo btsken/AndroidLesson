@@ -1,4 +1,4 @@
-package com.example.sqlite;
+package com.example.sqlitehelper;
 
 import java.util.List;
 

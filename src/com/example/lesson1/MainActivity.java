@@ -11,7 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
 	private Context context;
 	private ProgressDialog myDialog;
 	private ImageView imageView;
-	private DownloadWebPicture loadPic = new DownloadWebPicture();
+	private DownloadWebPicture loadPic;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,7 @@ public class MainActivity extends Activity {
 		init();
 		findViews();
 		setViews();
+		
 	}
 
 	private void setViews() {
@@ -115,22 +116,6 @@ public class MainActivity extends Activity {
 		});
 	}
 
-	private void savePreference() {
-		SharedPreferences settings = getSharedPreferences("pref_name", 0);
-		// 取得檔名為pref_name的偏好設定
-		// 文件建立模式0=MODE_PRIVATE：預設模式，文件只能被建立的應用程式存取（或具有相同用戶ID的應用程式）。
-		// MODE_WORLD_READABLE：允許其它應用程式讀取文件。
-		// MODE_WORLD_WRITEABLE：允許其它應用程式存取文件。
-		// MODE_MULTI_PROCESS：當有多個程式共用偏好設定時，無論其它程序是否已經載入這個設定，都要強制進行修改。
-
-		settings.edit().putString("key_name", "value").commit();
-		// edit()建立SharedPreferences的編輯
-		// 透過putString()、putInt()、putBoolean()等Editor方法加入資料
-		// remove("setting_name")可以刪除某一個設定
-		// clear()可清除全部的設定
-		// commit()將設定傳回SharedPreferences物件。
-	}
-
 	private void findViews() {
 		heightET = (EditText) findViewById(R.id.heightET);
 		weightET = (EditText) findViewById(R.id.weightET);
@@ -156,6 +141,7 @@ public class MainActivity extends Activity {
 		registerReceiver(r, ifilter);
 
 		gesture = new GestureDetector(this, gestureListener);
+		loadPic = new DownloadWebPicture();
 	}
 
 	@Override
@@ -279,33 +265,8 @@ public class MainActivity extends Activity {
 					"Connecting...");
 
 			final String url = "http://uploadingit.com/file/lltpirkd9pk3jbuw/raccoon.png";
-
-			Thread timmer = new Thread(new Runnable() {
-
-				@Override
-				public void run() {
-
-					loadPic.handleWebPic(url, mHandler);
-
-					// try {
-					// while (true) {
-					// Time t = new Time();
-					// t.setToNow();
-					// Thread.sleep(1000);
-					// Bundle countBundle = new Bundle();
-					// countBundle.putString("count", t.toString());
-					//
-					// Message msg = new Message();
-					// msg.setData(countBundle);
-					//
-					// mHandler.sendMessage(msg);
-					// }
-					// } catch (Exception e) {
-					// e.printStackTrace();
-					// }
-				}
-			});
-			timmer.start();
+			loadPic.handleWebPic(url, mHandler);
+			
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -323,13 +284,12 @@ public class MainActivity extends Activity {
 		public void handleMessage(Message msg) {
 			MainActivity activity = mActivity.get();
 			if (activity != null) {
-				activity.bmiTV.setText(msg.getData().getString("count", ""));
-				//
 				switch (msg.what) {
 				case 1:
 					activity.myDialog.dismiss();
 					activity.imageView
 							.setImageBitmap(activity.loadPic.getImg());
+
 					break;
 				}
 			}
