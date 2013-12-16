@@ -8,27 +8,43 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.lesson1.Bmi;
 import com.example.lesson1.R;
+import com.example.sqlitehelper.BmiDbHelper;
 
 public class ArrayAdapterActivity extends Activity {
 	private ListView listView;
+	private BmiDbHelper bmiDbHelper;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list);
-		listView = (ListView)findViewById(R.id.listView1);
-		listView.setAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_expandable_list_item_1, getData()));
+		init();
+		findViews();
+		setViews();
 	}
 
-	private List<String> getData() {
+	private void init() {
+		bmiDbHelper = new BmiDbHelper(this);
+	}
 
+	private void findViews() {
+		listView = (ListView) findViewById(R.id.listView1);
+	}
+
+	private void setViews() {
+		listView.setAdapter(new ArrayAdapter<String>(this,
+				android.R.layout.simple_expandable_list_item_1,
+				getData(bmiDbHelper.readAll())));
+	}
+
+	private List<String> getData(List<Bmi> bmiList) {
 		List<String> data = new ArrayList<String>();
-		data.add(getString(R.string.test));
-		data.add("測試資料2");
-		data.add("測試資料3");
-		data.add("測試資料4");
+
+		for (Bmi bmi : bmiList) {
+			data.add(String.valueOf(bmi.value));
+		}
 
 		return data;
 	}
