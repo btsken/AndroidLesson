@@ -1,6 +1,11 @@
 package com.example.gallery;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,6 +16,8 @@ import android.widget.ImageView;
 import com.example.lesson1.R;
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 public class GalleryActivity extends Activity {
 
@@ -25,17 +32,16 @@ public class GalleryActivity extends Activity {
 		findViews();
 		setViews();
 		GalleryAdapter imageAdapter = new GalleryAdapter(this);
-		// �]�w�Ϥ��ӷ�
-		final Integer[] mImageIds = { R.drawable.g1,
-				R.drawable.g2, R.drawable.g3,
-				R.drawable.g4, R.drawable.g5, R.drawable.g6 };
-		// �]�w�Ϥ�����m
+		// 設定圖片來源
+		final Integer[] mImageIds = { R.drawable.g1, R.drawable.g2,
+				R.drawable.g3, R.drawable.g4, R.drawable.g5, R.drawable.g6 };
+		// 設定圖片的位置
 		imageAdapter.setmImageIds(mImageIds);
 		gallery.setAdapter(imageAdapter);
 		gallery.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView parent, View view,
 					int position, long id) {
-				// Toast.makeText(MainActivity.this, "�z�諸�O��" + position + "�i��",
+				// Toast.makeText(MainActivity.this, "您選的是第" + position + "張圖",
 				// Toast.LENGTH_LONG).show();
 				img.setImageResource(mImageIds[position]);
 			}
@@ -46,10 +52,115 @@ public class GalleryActivity extends Activity {
 		gallery = (Gallery) findViewById(R.id.gallery);
 		img = (ImageView) findViewById(R.id.imageView1);
 		ad = (AdView) findViewById(R.id.adView);
-		
+
 	}
 
 	private void setViews() {
 		ad.loadAd(new AdRequest());
 	}
+
+	private static class AnimateFirstDisplayListener extends
+			SimpleImageLoadingListener {
+
+		static final List<String> displayedImages = Collections
+				.synchronizedList(new LinkedList<String>());
+
+		@Override
+		public void onLoadingComplete(String imageUri, View view,
+				Bitmap loadedImage) {
+			if (loadedImage != null) {
+				ImageView imageView = (ImageView) view;
+				boolean firstDisplay = !displayedImages.contains(imageUri);
+				if (firstDisplay) {
+					FadeInBitmapDisplayer.animate(imageView, 500);
+				} else {
+					imageView.setImageBitmap(loadedImage);
+				}
+				displayedImages.add(imageUri);
+			}
+		}
+	}
+
+	public static final String[] IMAGES = new String[] {
+			// 大圖片們
+			"https://lh6.googleusercontent.com/-jZgveEqb6pg/T3R4kXScycI/AAAAAAAAAE0/xQ7CvpfXDzc/s1024/sample_image_01.jpg",
+			"https://lh4.googleusercontent.com/-K2FMuOozxU0/T3R4lRAiBTI/AAAAAAAAAE8/a3Eh9JvnnzI/s1024/sample_image_02.jpg",
+			"https://lh5.googleusercontent.com/-SCS5C646rxM/T3R4l7QB6xI/AAAAAAAAAFE/xLcuVv3CUyA/s1024/sample_image_03.jpg",
+			"https://lh6.googleusercontent.com/-f0NJR6-_Thg/T3R4mNex2wI/AAAAAAAAAFI/45oug4VE8MI/s1024/sample_image_04.jpg",
+			"https://lh3.googleusercontent.com/-n-xcJmiI0pg/T3R4mkSchHI/AAAAAAAAAFU/EoiNNb7kk3A/s1024/sample_image_05.jpg",
+			"https://lh3.googleusercontent.com/-X43vAudm7f4/T3R4nGSChJI/AAAAAAAAAFk/3bna6D-2EE8/s1024/sample_image_06.jpg",
+			"https://lh5.googleusercontent.com/-MpZneqIyjXU/T3R4nuGO1aI/AAAAAAAAAFg/r09OPjLx1ZY/s1024/sample_image_07.jpg",
+			"https://lh6.googleusercontent.com/-ql3YNfdClJo/T3XvW9apmFI/AAAAAAAAAL4/_6HFDzbahc4/s1024/sample_image_08.jpg",
+			"https://lh5.googleusercontent.com/-Pxa7eqF4cyc/T3R4oasvPEI/AAAAAAAAAF0/-uYDH92h8LA/s1024/sample_image_09.jpg",
+			"https://lh4.googleusercontent.com/-Li-rjhFEuaI/T3R4o-VUl4I/AAAAAAAAAF8/5E5XdMnP1oE/s1024/sample_image_10.jpg",
+			"https://lh5.googleusercontent.com/-_HU4fImgFhA/T3R4pPVIwWI/AAAAAAAAAGA/0RfK_Vkgth4/s1024/sample_image_11.jpg",
+			"https://lh6.googleusercontent.com/-0gnNrVjwa0Y/T3R4peGYJwI/AAAAAAAAAGU/uX_9wvRPM9I/s1024/sample_image_12.jpg",
+			"https://lh3.googleusercontent.com/-HBxuzALS_Zs/T3R4qERykaI/AAAAAAAAAGQ/_qQ16FaZ1q0/s1024/sample_image_13.jpg",
+			"https://lh4.googleusercontent.com/-cKojDrARNjQ/T3R4qfWSGPI/AAAAAAAAAGY/MR5dnbNaPyY/s1024/sample_image_14.jpg",
+			"https://lh3.googleusercontent.com/-WujkdYfcyZ8/T3R4qrIMGUI/AAAAAAAAAGk/277LIdgvnjg/s1024/sample_image_15.jpg",
+			"https://lh6.googleusercontent.com/-FMHR7Vy3PgI/T3R4rOXlEKI/AAAAAAAAAGs/VeXrDNDBkaw/s1024/sample_image_16.jpg",
+			"https://lh4.googleusercontent.com/-mrR0AJyNTH0/T3R4rZs6CuI/AAAAAAAAAG0/UE1wQqCOqLA/s1024/sample_image_17.jpg",
+			"https://lh6.googleusercontent.com/-z77w0eh3cow/T3R4rnLn05I/AAAAAAAAAG4/BaerfWoNucU/s1024/sample_image_18.jpg",
+			"https://lh5.googleusercontent.com/-aWVwh1OU5Bk/T3R4sAWw0yI/AAAAAAAAAHE/4_KAvJttFwA/s1024/sample_image_19.jpg",
+			"https://lh6.googleusercontent.com/-q-js52DMnWQ/T3R4tZhY2sI/AAAAAAAAAHM/A8kjp2Ivdqg/s1024/sample_image_20.jpg",
+			"https://lh5.googleusercontent.com/-_jIzvvzXKn4/T3R4t7xpdVI/AAAAAAAAAHU/7QC6eZ10jgs/s1024/sample_image_21.jpg",
+			"https://lh3.googleusercontent.com/-lnGi4IMLpwU/T3R4uCMa7vI/AAAAAAAAAHc/1zgzzz6qTpk/s1024/sample_image_22.jpg",
+			"https://lh5.googleusercontent.com/-fFCzKjFPsPc/T3R4u0SZPFI/AAAAAAAAAHk/sbgjzrktOK0/s1024/sample_image_23.jpg",
+			"https://lh4.googleusercontent.com/-8TqoW5gBE_Y/T3R4vBS3NPI/AAAAAAAAAHs/EZYvpNsaNXk/s1024/sample_image_24.jpg",
+			"https://lh6.googleusercontent.com/-gc4eQ3ySdzs/T3R4vafoA7I/AAAAAAAAAH4/yKii5P6tqDE/s1024/sample_image_25.jpg",
+			"https://lh5.googleusercontent.com/--NYOPCylU7Q/T3R4vjAiWkI/AAAAAAAAAH8/IPNx5q3ptRA/s1024/sample_image_26.jpg",
+			"https://lh6.googleusercontent.com/-9IJM8so4vCI/T3R4vwJO2yI/AAAAAAAAAIE/ljlr-cwuqZM/s1024/sample_image_27.jpg",
+			"https://lh4.googleusercontent.com/-KW6QwOHfhBs/T3R4w0RsQiI/AAAAAAAAAIM/uEFLVgHPFCk/s1024/sample_image_28.jpg",
+			"https://lh4.googleusercontent.com/-z2557Ec1ctY/T3R4x3QA2hI/AAAAAAAAAIk/9-GzPL1lTWE/s1024/sample_image_29.jpg",
+			"https://lh5.googleusercontent.com/-LaKXAn4Kr1c/T3R4yc5b4lI/AAAAAAAAAIY/fMgcOVQfmD0/s1024/sample_image_30.jpg",
+			"https://lh4.googleusercontent.com/-F9LRToJoQdo/T3R4yrLtyQI/AAAAAAAAAIg/ri9uUCWuRmo/s1024/sample_image_31.jpg",
+			"https://lh4.googleusercontent.com/-6X-xBwP-QpI/T3R4zGVboII/AAAAAAAAAIs/zYH4PjjngY0/s1024/sample_image_32.jpg",
+			"https://lh5.googleusercontent.com/-VdLRjbW4LAs/T3R4zXu3gUI/AAAAAAAAAIw/9aFp9t7mCPg/s1024/sample_image_33.jpg",
+			"https://lh6.googleusercontent.com/-gL6R17_fDJU/T3R4zpIXGjI/AAAAAAAAAI8/Q2Vjx-L9X20/s1024/sample_image_34.jpg",
+			"https://lh3.googleusercontent.com/-1fGH4YJXEzo/T3R40Y1B7KI/AAAAAAAAAJE/MnTsa77g-nk/s1024/sample_image_35.jpg",
+			"https://lh4.googleusercontent.com/-Ql0jHSrea-A/T3R403mUfFI/AAAAAAAAAJM/qzI4SkcH9tY/s1024/sample_image_36.jpg",
+			"https://lh5.googleusercontent.com/-BL5FIBR_tzI/T3R41DA0AKI/AAAAAAAAAJk/GZfeeb-SLM0/s1024/sample_image_37.jpg",
+			"https://lh4.googleusercontent.com/-wF2Vc9YDutw/T3R41fR2BCI/AAAAAAAAAJc/JdU1sHdMRAk/s1024/sample_image_38.jpg",
+			"https://lh6.googleusercontent.com/-ZWHiPehwjTI/T3R41zuaKCI/AAAAAAAAAJg/hR3QJ1v3REg/s1024/sample_image_39.jpg",
+			// 小圖片們
+			"http://tabletpcssource.com/wp-content/uploads/2011/05/android-logo.png",
+			"http://simpozia.com/pages/images/stories/windows-icon.png",
+			"https://si0.twimg.com/profile_images/1135218951/gmail_profile_icon3_normal.png",
+			"http://www.krify.net/wp-content/uploads/2011/09/Macromedia_Flash_dock_icon.png",
+			"http://radiotray.sourceforge.net/radio.png",
+			"http://www.bandwidthblog.com/wp-content/uploads/2011/11/twitter-logo.png",
+			"http://weloveicons.s3.amazonaws.com/icons/100907_itunes1.png",
+			"http://weloveicons.s3.amazonaws.com/icons/100929_applications.png",
+			"http://www.idyllicmusic.com/index_files/get_apple-iphone.png",
+			"http://www.frenchrevolutionfood.com/wp-content/uploads/2009/04/Twitter-Bird.png",
+			"http://3.bp.blogspot.com/-ka5MiRGJ_S4/TdD9OoF6bmI/AAAAAAAAE8k/7ydKtptUtSg/s1600/Google_Sky%2BMaps_Android.png",
+			"http://www.desiredsoft.com/images/icon_webhosting.png",
+			"http://goodereader.com/apps/wp-content/uploads/downloads/thumbnails/2012/01/hi-256-0-99dda8c730196ab93c67f0659d5b8489abdeb977.png",
+			"http://1.bp.blogspot.com/-mlaJ4p_3rBU/TdD9OWxN8II/AAAAAAAAE8U/xyynWwr3_4Q/s1600/antivitus_free.png",
+			"http://cdn3.iconfinder.com/data/icons/transformers/computer.png",
+			"http://cdn.geekwire.com/wp-content/uploads/2011/04/firefox.png?7794fe",
+			"https://ssl.gstatic.com/android/market/com.rovio.angrybirdsseasons/hi-256-9-347dae230614238a639d21508ae492302340b2ba",
+			"http://androidblaze.com/wp-content/uploads/2011/12/tablet-pc-256x256.jpg",
+			"http://www.theblaze.com/wp-content/uploads/2011/08/Apple.png",
+			"http://1.bp.blogspot.com/-y-HQwQ4Kuu0/TdD9_iKIY7I/AAAAAAAAE88/3G4xiclDZD0/s1600/Twitter_Android.png",
+			"http://3.bp.blogspot.com/-nAf4IMJGpc8/TdD9OGNUHHI/AAAAAAAAE8E/VM9yU_lIgZ4/s1600/Adobe%2BReader_Android.png",
+			"http://cdn.geekwire.com/wp-content/uploads/2011/05/oovoo-android.png?7794fe",
+			"http://icons.iconarchive.com/icons/kocco/ndroid/128/android-market-2-icon.png",
+			"http://thecustomizewindows.com/wp-content/uploads/2011/11/Nicest-Android-Live-Wallpapers.png",
+			"http://c.wrzuta.pl/wm16596/a32f1a47002ab3a949afeb4f",
+			"http://macprovid.vo.llnwd.net/o43/hub/media/1090/6882/01_headline_Muse.jpg",
+			// 特殊情況們
+			"file:///sdcard/UniversalImageLoader.png", // Image from SD card
+			"assets://LivingThings.jpg", // Image from assets
+			"drawable://" + R.drawable.ic_launcher, // Image from drawables
+			"http://upload.wikimedia.org/wikipedia/ru/b/b6/�訄郕_郕郋�_�_邾��訄邾邽_赲郋迮赲訄郅.png", // Link
+																							// with
+																							// UTF-8
+			"https://www.eff.org/sites/default/files/chrome150_0.jpg", // Image
+																		// from
+																		// HTTPS
+			"http://bit.ly/soBiXr", // Redirect link
+			"", // Empty link
+			"http://wrong.site.com/corruptedLink", // Wrong link
+	};
 }
