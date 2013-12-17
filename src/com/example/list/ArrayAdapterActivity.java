@@ -41,6 +41,7 @@ public class ArrayAdapterActivity extends Activity {
 
 	private List<String> getData(List<Bmi> bmiList) {
 		List<String> data = new ArrayList<String>();
+
 		for (Bmi bmi : bmiList) {
 			data.add(String.valueOf(bmi.value));
 		}

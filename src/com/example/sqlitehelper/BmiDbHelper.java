@@ -32,10 +32,10 @@ public class BmiDbHelper implements IDbHelper<Bmi> {
 		if (rows_num != 0) {
 			cursor.moveToFirst(); // 將指標移至第一筆資料
 			for (int i = 0; i < rows_num; i++) {
-				Bmi bmi = new Bmi();
-				bmi.value = cursor.getDouble(1);
 //				Log.e(SqliteConstant.BMI_COLUMNS[0], cursor.getInt(0) + "");
 //				Log.e(SqliteConstant.BMI_COLUMNS[1], cursor.getDouble(1) + "");
+				Bmi bmi = new Bmi();
+				bmi.value = cursor.getDouble(1);
 				bmiList.add(bmi);
 				cursor.moveToNext(); // 將指標移至下一筆資料
 			}
