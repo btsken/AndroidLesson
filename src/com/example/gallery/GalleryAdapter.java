@@ -9,14 +9,18 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 
 import com.example.lesson1.R;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class GalleryAdapter extends BaseAdapter {
 	private Context mContext;
-	private Integer[] mImageIds;
+	private String[] mImageIds;
 	private final int mGalleryItemBackground;
 	private final float mDensity;
 	private static final int ITEM_WIDTH = 300;
-    private static final int ITEM_HEIGHT = 200;
+	private static final int ITEM_HEIGHT = 200;
+	private DisplayImageOptions options;
 
 	public GalleryAdapter(Context c) {
 		mContext = c;
@@ -28,35 +32,40 @@ public class GalleryAdapter extends BaseAdapter {
 		a.recycle();
 
 		mDensity = c.getResources().getDisplayMetrics().density;
+
+		options = new DisplayImageOptions.Builder()
+				.showStubImage(R.drawable.ic_stub)
+				.showImageForEmptyUri(R.drawable.ic_empty)
+				.showImageOnFail(R.drawable.ic_error).cacheInMemory()
+				.cacheOnDisc().displayer(new RoundedBitmapDisplayer(5)).build();
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ImageView imageView;
-        if (convertView == null) {
-            convertView = new ImageView(mContext);
+		if (convertView == null) {
+			convertView = new ImageView(mContext);
 
-            imageView = (ImageView) convertView;
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            imageView.setLayoutParams(new Gallery.LayoutParams(
-                    (int) (ITEM_WIDTH * mDensity + 0.5f),
-                    (int) (ITEM_HEIGHT * mDensity + 0.5f)));
-        
-            // The preferred Gallery item background
-            imageView.setBackgroundResource(mGalleryItemBackground);
-        } else {
-            imageView = (ImageView) convertView;
-        }
+			imageView = (ImageView) convertView;
+			imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+			imageView.setLayoutParams(new Gallery.LayoutParams(
+					(int) (ITEM_WIDTH * mDensity + 0.5f), (int) (ITEM_HEIGHT
+							* mDensity + 0.5f)));
 
-        imageView.setImageResource(mImageIds[position]);
+			// The preferred Gallery item background
+			imageView.setBackgroundResource(mGalleryItemBackground);
+		} else {
+			imageView = (ImageView) convertView;
+		}
 
-        return imageView;
+		ImageLoader.getInstance().displayImage(mImageIds[position], imageView, options);
+		return imageView;
 	}
 
-	public Integer[] getmImageIds() {
+	public String[] getmImageIds() {
 		return mImageIds;
 	}
 
-	public void setmImageIds(Integer[] mImageIds) {
+	public void setmImageIds(String[] mImageIds) {
 		this.mImageIds = mImageIds;
 	}
 

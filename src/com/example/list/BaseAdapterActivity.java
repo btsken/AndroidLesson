@@ -155,6 +155,5 @@ public class BaseAdapterActivity extends Activity {
 
 			return convertView;
 		}
-
 	}
 }

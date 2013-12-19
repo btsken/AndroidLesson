@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -175,6 +176,7 @@ public class MainActivity extends Activity {
 				Intent intent = new Intent(context, BaseAdapterActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
+				overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left); 
 			} else if (e1.getX() - e2.getX() < -120) { // ¦V¥k
 				Toast.makeText(context, "¦V¥k·Æ", Toast.LENGTH_LONG).show();
 			} else {
