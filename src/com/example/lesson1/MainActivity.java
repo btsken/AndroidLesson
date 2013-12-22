@@ -128,7 +128,6 @@ public class MainActivity extends Activity {
 	private void init() {
 		context = this;
 		bmi = new Bmi();
-		Log.e("213", "123");
 		IntentFilter ifilter = new IntentFilter();
 		ifilter.addAction(Intent.ACTION_NEW_OUTGOING_CALL); // if make a phone
 															// call
