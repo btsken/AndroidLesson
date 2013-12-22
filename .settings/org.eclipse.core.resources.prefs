@@ -2,3 +2,4 @@ eclipse.preferences.version=1
 encoding//src/com/example/gallery/GalleryActivity.java=UTF-8
 encoding//src/com/example/lesson1/ImageAdapter.java=UTF-8
 encoding//src/com/example/list/BaseAdapterActivity.java=UTF-8
+encoding//src/com/example/service/DownLoadService.java=UTF-8

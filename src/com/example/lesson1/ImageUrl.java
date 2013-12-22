@@ -2,6 +2,7 @@ package com.example.lesson1;
 
 public class ImageUrl {
 	public static final String[] IMAGES = new String[] {
+		"http://uploadingit.com/file/lltpirkd9pk3jbuw/raccoon.png",
 			"http://a.hiphotos.baidu.com/album/w%3D2048/sign=5c4fe8d4a5c27d1ea5263cc42fedac6e/024f78f0f736afc3f1416515b219ebc4b7451274.jpg",
 			"http://c.hiphotos.baidu.com/album/w%3D2048/sign=4d19d0cb86d6277fe91235381c001f30/4e4a20a4462309f75a4ae962730e0cf3d7cad69d.jpg",
 			"http://a.hiphotos.baidu.com/album/w%3D2048/sign=ce18d993fc1f4134e037027e112795ca/dcc451da81cb39dbdefb2326d1160924ab183082.jpg",

@@ -13,6 +13,8 @@ import java.net.URL;
 
 public class DownloadWebPicture {
 	private Bitmap bmp;
+	public static final int DOWNLOAD_SUCCESS = 1;
+	public static final int DOWNLOAD_FAIL = 2;
 
 	public DownloadWebPicture() {
 		bmp = null;
@@ -28,7 +30,13 @@ public class DownloadWebPicture {
 			public void run() {
 				bmp = getUrlPic(url);
 				Message msg = new Message();
-				msg.what = 1;
+				
+				if(bmp == null) {
+					msg.what = DOWNLOAD_FAIL;
+				} else {
+					msg.what = DOWNLOAD_SUCCESS;
+				}			
+				
 				handler.sendMessage(msg);
 			}
 		}).start();
@@ -62,6 +70,7 @@ public class DownloadWebPicture {
 			httpURLConnection.disconnect();
 		} catch (IOException e) {
 			Log.e("IOException", e.toString());
+			return null;
 		}
 
 		return webImg;

@@ -1,21 +1,27 @@
 package com.example.gallery;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lesson1.ImageUrl;
 import com.example.lesson1.R;
+import com.example.service.DownLoadService;
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
@@ -23,6 +29,7 @@ public class GalleryActivity extends Activity {
 
 	Gallery gallery;
 	ImageView img;
+	TextView hiddenTv;
 	AdView ad;
 	GalleryAdapter imageAdapter;
 
@@ -38,6 +45,7 @@ public class GalleryActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				loadImg(position);
+				hiddenTv.setText(String.valueOf(ImageUrl.IMAGES[position]));
 			}
 		});
 	}
@@ -45,16 +53,13 @@ public class GalleryActivity extends Activity {
 	private void loadImg(int position) {
 		ImageLoader.getInstance().loadImage(ImageUrl.IMAGES[position],
 				new SimpleImageLoadingListener() {
-					public void onLoadingComplete(String imageUri,
-							android.view.View view,
-							android.graphics.Bitmap loadedImage) {
+					public void onLoadingComplete(String imageUri, View view,
+							Bitmap loadedImage) {
 						img.setImageBitmap(loadedImage);
 					};
 
-					public void onLoadingFailed(
-							String imageUri,
-							android.view.View view,
-							com.nostra13.universalimageloader.core.assist.FailReason failReason) {
+					public void onLoadingFailed(String imageUri, View view,
+							FailReason failReason) {
 						Toast.makeText(GalleryActivity.this, "download error",
 								Toast.LENGTH_LONG).show();
 					};
@@ -74,13 +79,23 @@ public class GalleryActivity extends Activity {
 		gallery = (Gallery) findViewById(R.id.gallery);
 		img = (ImageView) findViewById(R.id.imageView1);
 		ad = (AdView) findViewById(R.id.adView);
-
+		hiddenTv = (TextView) findViewById(R.id.url);
 	}
 
 	private void setViews() {
 		ad.loadAd(new AdRequest());
 		imageAdapter.setmImageIds(ImageUrl.IMAGES);
 		gallery.setAdapter(imageAdapter);
+		img.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				Intent serviceIntent = new Intent(GalleryActivity.this,
+						DownLoadService.class);
+				serviceIntent.putExtra("url", hiddenTv.getText().toString());
+				startService(serviceIntent);
+				return false;
+			}
+		});
 	}
 
 	private void init() {

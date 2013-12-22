@@ -11,7 +11,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,7 +21,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,7 +31,6 @@ import com.example.gallery.GalleryActivity;
 import com.example.list.ArrayAdapterActivity;
 import com.example.list.BaseAdapterActivity;
 import com.example.list.SimpleAdapterActivity;
-import com.example.service.ReceiverDetect;
 import com.example.sqlitehelper.BmiDbHelper;
 import com.example.web.DownloadWebPicture;
 
@@ -138,8 +135,6 @@ public class MainActivity extends Activity {
 		ifilter.addAction(Intent.ACTION_SCREEN_OFF); // if screen turn off
 		ifilter.addAction(Intent.ACTION_SCREEN_ON); // if screen turn on
 
-		ReceiverDetect r = new ReceiverDetect();
-		registerReceiver(r, ifilter);
 
 		gesture = new GestureDetector(this, gestureListener);
 		loadPic = new DownloadWebPicture();

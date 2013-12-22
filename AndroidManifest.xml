@@ -41,7 +41,8 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
             />
 
-        <service android:name=".ServicesEx" />
+        <service android:name="com.example.service.DownLoadService" />
+        <service android:name="com.example.service.DownLoadService2" />
     </application>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
