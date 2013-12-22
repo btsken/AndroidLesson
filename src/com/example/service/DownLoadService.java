@@ -22,6 +22,7 @@ import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.example.lesson1.R;
 import com.example.web.DownloadWebPicture;
 
 public class DownLoadService extends Service {
@@ -59,6 +60,7 @@ public class DownLoadService extends Service {
 
 	private void createNotification(String text) {
 		mBuilder = new NotificationCompat.Builder(this)
+		.setSmallIcon(R.drawable.ic_launcher)
 				.setContentTitle("MyApp")
 				.setContentText(text)
 				.setTicker(text);
