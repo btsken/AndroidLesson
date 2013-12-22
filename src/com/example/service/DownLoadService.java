@@ -60,10 +60,8 @@ public class DownLoadService extends Service {
 
 	private void createNotification(String text) {
 		mBuilder = new NotificationCompat.Builder(this)
-		.setSmallIcon(R.drawable.ic_launcher)
-				.setContentTitle("MyApp")
-				.setContentText(text)
-				.setTicker(text);
+				.setSmallIcon(R.drawable.ic_launcher).setContentTitle("MyApp")
+				.setContentText(text).setTicker(text);
 		manager.notify(NOTIFICATION_ID, mBuilder.build());
 	}
 
