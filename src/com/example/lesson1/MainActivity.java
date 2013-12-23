@@ -57,7 +57,6 @@ public class MainActivity extends Activity {
 		init();
 		findViews();
 		setViews();
-		
 	}
 
 	private void setViews() {

@@ -127,10 +127,9 @@ public class DownLoadService extends Service {
 				switch (msg.what) {
 				case DownloadWebPicture.DOWNLOAD_SUCCESS:
 					activity.saveBitmap(activity.loadPic.getImg());
-
 					break;
 				case DownloadWebPicture.DOWNLOAD_FAIL:
-
+					activity.updateNotificationTicker("Download Fail!");
 					break;
 				}
 			}

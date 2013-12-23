@@ -1,39 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:padding="@dimen/activity_horizontal_margin" />
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_gravity="center"
+        android:layout_weight="2" />
 
     <TextView
         android:id="@+id/url"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <Gallery
         android:id="@+id/gallery"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="@dimen/activity_horizontal_margin" >
-
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" >
     </Gallery>
 
-	<com.google.ads.AdView android:id="@+id/adView"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content" 
-             ads:adUnitId="a152981a42779bd"
-             ads:adSize="SMART_BANNER"
-              ads:loadAdOnCreate="true"/>
-               <!-- ads:testDevices="I7JZYSGA4SBQWOSW"   -->
-    </LinearLayout>        
-    
+    <com.google.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="a152981a42779bd"
+        ads:loadAdOnCreate="true" />
+    <!-- ads:testDevices="I7JZYSGA4SBQWOSW" -->
 
+</LinearLayout>

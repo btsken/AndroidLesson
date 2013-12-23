@@ -24,27 +24,23 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:background="#00aa00"
-            android:gravity="center_horizontal"
-            android:text="green" />
+            android:text="greesdffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffn" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="2"
             android:background="#0000aa"
-            android:gravity="center_horizontal"
             android:text="blue" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-           
             android:background="#aaaa00"
-            android:gravity="center_horizontal"
             android:text="yellow" />
     </LinearLayout>
 
