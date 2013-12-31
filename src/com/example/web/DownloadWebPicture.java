@@ -15,9 +15,11 @@ public class DownloadWebPicture {
 	private Bitmap bmp;
 	public static final int DOWNLOAD_SUCCESS = 1;
 	public static final int DOWNLOAD_FAIL = 2;
+	public String errorMsg;
 
 	public DownloadWebPicture() {
 		bmp = null;
+		errorMsg = "";
 	}
 
 	public Bitmap getImg() {
@@ -70,6 +72,7 @@ public class DownloadWebPicture {
 			httpURLConnection.disconnect();
 		} catch (IOException e) {
 			Log.e("IOException", e.toString());
+			errorMsg = e.toString();
 			return null;
 		}
 

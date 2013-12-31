@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.lesson1.ImageUrl;
 import com.example.lesson1.R;
 import com.example.service.DownLoadService;
+import com.example.service.NewService;
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -27,11 +28,13 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 public class GalleryActivity extends Activity {
 
-	Gallery gallery;
-	ImageView img;
-	TextView hiddenTv;
-	AdView ad;
-	GalleryAdapter imageAdapter;
+	private Gallery gallery;
+	private ImageView img;
+//	private TextView hiddenTv;
+	private AdView ad;
+	private GalleryAdapter imageAdapter;
+	private String imageUrl;
+	private int imagePosition;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -45,7 +48,9 @@ public class GalleryActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				loadImg(position);
-				hiddenTv.setText(String.valueOf(ImageUrl.IMAGES[position]));
+//				hiddenTv.setText(String.valueOf(ImageUrl.IMAGES[position]));
+				imageUrl = ImageUrl.IMAGES[position];
+				imagePosition = position;
 			}
 		});
 	}
@@ -79,7 +84,7 @@ public class GalleryActivity extends Activity {
 		gallery = (Gallery) findViewById(R.id.gallery);
 		img = (ImageView) findViewById(R.id.imageView1);
 		ad = (AdView) findViewById(R.id.adView);
-		hiddenTv = (TextView) findViewById(R.id.url);
+//		hiddenTv = (TextView) findViewById(R.id.url);
 	}
 
 	private void setViews() {
@@ -90,8 +95,9 @@ public class GalleryActivity extends Activity {
 			@Override
 			public boolean onLongClick(View v) {
 				Intent serviceIntent = new Intent(GalleryActivity.this,
-						DownLoadService.class);
-				serviceIntent.putExtra("url", hiddenTv.getText().toString());
+						NewService.class);
+				serviceIntent.putExtra("url", imageUrl);
+				serviceIntent.putExtra("notifyId", imagePosition);
 				startService(serviceIntent);
 				return false;
 			}
@@ -106,5 +112,8 @@ public class GalleryActivity extends Activity {
 				.discCacheFileNameGenerator(new Md5FileNameGenerator())
 				.tasksProcessingOrder(QueueProcessingType.LIFO).build();
 		ImageLoader.getInstance().init(config);
+		
+		imageUrl = "";
+		imagePosition = 0;
 	}
 }
