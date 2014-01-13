@@ -1,5 +1,6 @@
 package com.example.service;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import android.app.Service;
@@ -7,14 +8,15 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
 
+
 public abstract class ConcurrentIntentService extends Service {
 	protected abstract void onHandleIntent(Intent intent);
 
 	private boolean m_bRedelivery;
-	private ConcurrentHashMap<Intent, MyAsyncTask> m_mapIntent2AsyncTask;
+	private Map<Intent, MyAsyncTask> m_mapIntent2AsyncTask;
 
 	public ConcurrentIntentService() {
-		m_mapIntent2AsyncTask = new ConcurrentHashMap<Intent, MyAsyncTask>(32);
+		m_mapIntent2AsyncTask = new ConcurrentHashMap<Intent, MyAsyncTask>();
 	}
 
 	public void setIntentRedelivery(boolean enabled) {
@@ -60,14 +62,16 @@ public abstract class ConcurrentIntentService extends Service {
 
 		@Override
 		protected void onPostExecute(Void result) {
-			if (m_mapIntent2AsyncTask.isEmpty())
+			if (m_mapIntent2AsyncTask.isEmpty()) {
 				stopSelf();
+			}
 		}
 
 		@Override
 		protected void onCancelled() {
-			if (m_mapIntent2AsyncTask.isEmpty())
+			if (m_mapIntent2AsyncTask.isEmpty()) {
 				stopSelf();
+			}
 		}
 	}
 }

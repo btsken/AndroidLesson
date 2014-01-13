@@ -33,6 +33,7 @@ public class NewService extends ConcurrentIntentService{
 	
 	@Override
 	public void onCreate() {
+		Log.e("NewService", "onCreate");
 		super.onCreate();
 		loadPic = new DownloadWebPicture();
 		init();

@@ -4,21 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Gallery;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lesson1.ImageUrl;
 import com.example.lesson1.R;
-import com.example.service.DownLoadService;
 import com.example.service.NewService;
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -30,7 +29,6 @@ public class GalleryActivity extends Activity {
 
 	private Gallery gallery;
 	private ImageView img;
-//	private TextView hiddenTv;
 	private AdView ad;
 	private GalleryAdapter imageAdapter;
 	private String imageUrl;
@@ -48,7 +46,6 @@ public class GalleryActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				loadImg(position);
-//				hiddenTv.setText(String.valueOf(ImageUrl.IMAGES[position]));
 				imageUrl = ImageUrl.IMAGES[position];
 				imagePosition = position;
 			}
@@ -84,16 +81,17 @@ public class GalleryActivity extends Activity {
 		gallery = (Gallery) findViewById(R.id.gallery);
 		img = (ImageView) findViewById(R.id.imageView1);
 		ad = (AdView) findViewById(R.id.adView);
-//		hiddenTv = (TextView) findViewById(R.id.url);
 	}
 
 	private void setViews() {
-		ad.loadAd(new AdRequest());
+		AdRequest adRequest = new AdRequest.Builder().build();
+		ad.loadAd(adRequest);
 		imageAdapter.setmImageIds(ImageUrl.IMAGES);
 		gallery.setAdapter(imageAdapter);
 		img.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
+				Log.e("onLongClick", "onLongClick");
 				Intent serviceIntent = new Intent(GalleryActivity.this,
 						NewService.class);
 				serviceIntent.putExtra("url", imageUrl);

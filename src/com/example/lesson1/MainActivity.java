@@ -27,10 +27,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.calendar.CalendarExample;
 import com.example.gallery.GalleryActivity;
 import com.example.list.ArrayAdapterActivity;
 import com.example.list.BaseAdapterActivity;
 import com.example.list.SimpleAdapterActivity;
+import com.example.map.MapActivity;
 import com.example.sqlitehelper.BmiDbHelper;
 import com.example.web.DownloadWebPicture;
 
@@ -56,7 +58,13 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		init();
 		findViews();
-		setViews();
+		setViews();		
+	}
+
+	@Override
+	protected void onResume() {
+		new CalendarExample(this);
+		super.onResume();
 	}
 
 	private void setViews() {
@@ -172,6 +180,10 @@ public class MainActivity extends Activity {
 				overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left); 
 			} else if (e1.getX() - e2.getX() < -120) { // ¦V¥k
 				Toast.makeText(context, "¦V¥k·Æ", Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(context, MapActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left); 
 			} else {
 				return false;
 			}
