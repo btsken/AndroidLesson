@@ -11,4 +11,6 @@
 	<string name="create_folder">新建資料夾</string>
 	<string name="get_file">取得所有檔案名稱</string>
 	<string name="test">測試資料1</string>
+	<string name="play">play</string>
+	<string name="pause">pause</string>
 </resources>

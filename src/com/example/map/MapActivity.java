@@ -39,7 +39,7 @@ public class MapActivity extends Activity {
 	}
 
 	private void init() {
-		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
+		map = ((MapFragment) this.getFragmentManager().findFragmentById(R.id.map))
 				.getMap();
 
 		map.setMyLocationEnabled(true);

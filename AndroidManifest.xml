@@ -66,6 +66,10 @@
 
         <service android:name="com.example.service.DownLoadService" />
         <service android:name="com.example.service.NewService" />
+        
+        <activity android:name="com.example.player.PlayerActivity" >
+        </activity>
+        <service android:name="com.example.player.MusicService" />
     </application>
 
 </manifest>

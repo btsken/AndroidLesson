@@ -33,6 +33,7 @@ import com.example.list.ArrayAdapterActivity;
 import com.example.list.BaseAdapterActivity;
 import com.example.list.SimpleAdapterActivity;
 import com.example.map.MapActivity;
+import com.example.player.PlayerActivity;
 import com.example.sqlitehelper.BmiDbHelper;
 import com.example.web.DownloadWebPicture;
 
@@ -174,7 +175,7 @@ public class MainActivity extends Activity {
 
 			if (e1.getX() - e2.getX() > 120) { // ¦V¥ª
 				Toast.makeText(context, "¦V¥ª·Æ", Toast.LENGTH_LONG).show();
-				Intent intent = new Intent(context, BaseAdapterActivity.class);
+				Intent intent = new Intent(context, PlayerActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
 				overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left); 
